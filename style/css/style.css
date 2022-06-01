@@ -1,0 +1,145 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap");
+html {
+  font-size: 62.5%;
+  height: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+body {
+  font-size: 1.6rem;
+  color: #414141;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header, footer {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  background-color: #F2CBC2;
+  color: #414141;
+}
+header:is(header), footer:is(header) {
+  padding: 0 2.4rem;
+}
+header:is(header) h1, footer:is(header) h1 {
+  font-weight: 600;
+  font-size: 2.589rem;
+  user-select: none;
+}
+header:is(footer), footer:is(footer) {
+  justify-content: center;
+}
+
+.small {
+  font-size: 0.989rem;
+}
+
+section {
+  background-color: #f5faff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+section .todo-box {
+  height: 80%;
+  width: 50%;
+  background-color: #ffffff;
+  padding: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  border-radius: 8px;
+}
+section .todo-box form {
+  display: flex;
+  gap: 2.4rem;
+}
+section .todo-box form input {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid #BF7973;
+  padding-left: 0.8rem;
+  font-family: "Source Sans Pro", sans-serif;
+}
+section .todo-box form button {
+  width: 15rem;
+  height: 3.2rem;
+  background-color: #F2CBC2;
+  color: #414141;
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+}
+section .todo-box ul > li {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding: 0 0.8rem;
+}
+section .todo-box ul > li .task-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid #BF7973;
+  cursor: pointer;
+}
+section .todo-box ul > li .task-checkbox.done {
+  background-color: #74ee84;
+  border-color: #47e85c;
+  transition: ease-in 0.1s;
+}
+section .todo-box ul > li .task-checkbox.done ~ h2 {
+  font-weight: 400;
+  text-decoration: line-through;
+  color: #8a8a8a;
+}
+section .todo-box ul > li .task-checkbox.done:before {
+  display: flex;
+  justify-content: center;
+  content: "✔";
+  font-size: 1.6rem;
+  color: #414141;
+}
+section .todo-box ul > li h2 {
+  margin-left: 0.8rem;
+  flex: 1;
+  font-weight: 600;
+}
+section .todo-box ul > li .options {
+  display: flex;
+  gap: 0.8rem;
+  font-size: 1.2rem;
+}
+section .todo-box ul > li .options > div {
+  cursor: pointer;
+}
+section .todo-box ul > li:hover {
+  background-color: #f5faff;
+  border-radius: 4px;
+  transition: ease-in 0.1s;
+}
+section .todo-box .empty {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-top: 3.2rem;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.icon.trash {
+  background-image: url(../../icons/trash-can-regular.svg);
+}
+.icon.pencil {
+  background-image: url(../../icons/pen-to-square-regular.svg);
+}
+
+/*# sourceMappingURL=style.css.map */
