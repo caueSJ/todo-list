@@ -8,6 +8,16 @@ const getTasks = () => {
     return JSON.parse(stringTasks);
 }
 
+const getLastId = () => {
+    const lastID = localStorage.getItem('last-id');
+
+    if (!lastID) {
+        return 0;
+    }
+
+    return +lastID;
+}
+
 const toogleChecked = (element) => {
     const classList = element.classList;
     const taskId = +element.parentElement.id;
@@ -24,6 +34,11 @@ const setTask = (tasks) => {
     localStorage.setItem('todo-tasks', stringTasks);
 };
 
+const updateLastId = () => {
+    const lastID = getLastId();
+    localStorage.setItem('last-id', lastID + 1);
+}
+
 const addTask = (task) => {
     const tasks = getTasks();
     const newTasks = [
@@ -32,6 +47,7 @@ const addTask = (task) => {
     ];
 
     setTask(newTasks);
+    updateLastId();
 }
 
 const removeTask = (element) => {
@@ -39,7 +55,7 @@ const removeTask = (element) => {
     const tasks = document.getElementsByTagName('li');
     const newTasks = Array.from(tasks, task => {
         return {
-            id: +task.id - 1, // FIX ID ATTRIBUTION
+            id: +task.id,
             title: task.querySelector('h2').innerText,
             status: (task.querySelector('.task-checkbox').classList.contains('done')) ? 1 : 0
         }
@@ -53,13 +69,13 @@ const removeTask = (element) => {
 const formHandlerSubmit = (event) => {
     event.preventDefault();
     const taskTitle = event.target.querySelector('input[type="text"]').value.trim();
-    const tasks = getTasks();
+    const taskID = getLastId();
 
     if (taskTitle.length === 0)
         return;
 
     const newTask = {
-        id: tasks.length + 1,
+        id: taskID + 1,
         title: taskTitle,
         status: 0
     }
