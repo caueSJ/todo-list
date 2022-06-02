@@ -33,10 +33,6 @@ header:is(footer), footer:is(footer) {
   justify-content: center;
 }
 
-.small {
-  font-size: 0.989rem;
-}
-
 section {
   background-color: #f5faff;
   display: flex;

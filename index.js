@@ -19,21 +19,6 @@ const toogleChecked = (element) => {
     setTask(tasks);
 }
 
-// const toogleChecked = (event) => {
-//     const classList = event.target.classList;
-//     const taskId = +event.target.parentElement.id;
-//     classList.toggle('done', !classList.contains('done'));
-
-//     const tasks = getTasks();
-//     const indexTaskToChange = tasks.findIndex(task => task.id === taskId);
-//     tasks[indexTaskToChange].status = (tasks[indexTaskToChange].status === 0) ? 1 : 0;
-//     setTask(tasks);
-// }
-
-// const checkedEventListener = (checkbox) => {
-//     checkbox.addEventListener('click', toogleChecked);
-// }
-
 const setTask = (tasks) => {
     const stringTasks = JSON.stringify(tasks);
     localStorage.setItem('todo-tasks', stringTasks);
@@ -110,10 +95,6 @@ const handlerTaskItemEvent = (event) => {
 
 const attachEvents = () => {
     document.querySelector('form').addEventListener('submit', formHandlerSubmit);
-
-    // document.querySelectorAll('.task-checkbox').forEach((checkbox) => {
-    //     checkedEventListener(checkbox);
-    // });
 
     document.querySelector('ul').addEventListener('click', handlerTaskItemEvent);
 }
