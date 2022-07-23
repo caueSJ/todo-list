@@ -103,9 +103,15 @@ section .todo-box ul > li .task-checkbox.done:before {
   color: #414141;
 }
 section .todo-box ul > li h2 {
-  margin-left: 0.8rem;
+  margin: 0 0.8rem;
   flex: 1;
   font-weight: 600;
+  padding: 0.4rem;
+}
+section .todo-box ul > li h2.editable {
+  border: 1px solid #414141;
+  border-radius: 4px;
+  background-color: #F2CBC2;
 }
 section .todo-box ul > li .options {
   display: flex;

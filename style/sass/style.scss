@@ -123,9 +123,16 @@ section {
             }
 
             h2 {
-                margin-left: 0.8rem;
+                margin: 0 0.8rem;
                 flex: 1;
                 font-weight: 600;
+                padding: 0.4rem;
+
+                &.editable {
+                    border: 1px solid $secondary-color-dark;
+                    border-radius: 4px;
+                    background-color: $primary-color-light;
+                }
             }
 
             .options {

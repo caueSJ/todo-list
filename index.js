@@ -66,6 +66,33 @@ const removeTask = (element) => {
     }
 }
 
+const saveEditTaskOnEnter = (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        event.target.contentEditable = false;
+        event.target.classList.remove('editable');
+
+        const taskId = +event.target.parentElement.id;
+        const tasks = getTasks();
+        const indexTaskToChange = tasks.findIndex(task => task.id === taskId);
+        tasks[indexTaskToChange].title = event.target.innerText;
+        setTask(tasks);
+    }
+}
+
+const editTask = (element) => {
+    const h2ToEdit = element.parentElement.parentElement.parentElement.querySelector('h2');
+    if (h2ToEdit.classList.contains('editable')) {
+        h2ToEdit.contentEditable = false;
+        h2ToEdit.classList.remove('editable');
+        return;
+    }
+    h2ToEdit.contentEditable = true;
+    h2ToEdit.classList.add('editable');
+    h2ToEdit.focus();
+    h2ToEdit.addEventListener('keydown', saveEditTaskOnEnter);
+}
+
 const formHandlerSubmit = (event) => {
     event.preventDefault();
     const taskTitle = event.target.querySelector('input[type="text"]').value.trim();
@@ -96,6 +123,7 @@ const handlerTaskItemEvent = (event) => {
             break;
     
         case 'edit':
+            editTask(element);
             break;
         
         case 'remove':
