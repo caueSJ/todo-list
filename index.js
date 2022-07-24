@@ -62,7 +62,7 @@ const removeTask = (element) => {
     });
     setTask(newTasks);
     if (tasks.length === 0) {
-        document.querySelector('#task-list').insertAdjacentHTML('beforeend', '<h2 class="empty">Well done, no tasks to do! :D</h2>');   
+        document.querySelector('#task-list').insertAdjacentHTML('beforeend', '<h2 class="empty">Well done, no tasks to do! :D</h2>');
     }
 }
 
@@ -80,16 +80,42 @@ const saveEditTaskOnEnter = (event) => {
     }
 }
 
+const handlerPasteOrDrop = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    let plainText = (event.type === 'drop') ? event.dataTransfer.getData('text') : event.clipboardData.getData('text');
+
+    event.target.insertAdjacentHTML('beforeend', plainText);
+}
+
+const resetH2Edition = (h2ToReset) => {
+    h2ToReset.contentEditable = false;
+    h2ToReset.classList.remove('editable');
+}
+
 const editTask = (element) => {
     const h2ToEdit = element.parentElement.parentElement.parentElement.querySelector('h2');
+    const h2BeingEdited = document.querySelector('h2.editable');
+
+    // Save task already edited
     if (h2ToEdit.classList.contains('editable')) {
-        h2ToEdit.contentEditable = false;
-        h2ToEdit.classList.remove('editable');
+        resetH2Edition(h2ToEdit);
+        h2ToEdit.dispatchEvent(new KeyboardEvent('keydown', {
+            'key': 'Enter'
+        }));
         return;
     }
+
+    // Reset h2 that are being edited
+    if (h2BeingEdited) {
+        resetH2Edition(h2BeingEdited);
+    }
+
     h2ToEdit.contentEditable = true;
     h2ToEdit.classList.add('editable');
     h2ToEdit.focus();
+    h2ToEdit.onpaste = h2ToEdit.ondrop = handlerPasteOrDrop;
     h2ToEdit.addEventListener('keydown', saveEditTaskOnEnter);
 }
 
@@ -112,26 +138,20 @@ const formHandlerSubmit = (event) => {
     event.target.reset();
 }
 
-const handlerTaskItemEvent = (event) => {
+// Object Literals for task item options (check, edit and remove)
+const mapActions = {
+    'toogle-status': toogleChecked,
+    'edit': editTask,
+    'remove': removeTask
+}
+
+const handlerTaskItemAction = (event) => {
     event.stopPropagation();
-    const eventName = event.target.getAttribute('name');
-    const element = event.target;
 
-    switch (eventName) {
-        case 'toogle-status':
-            toogleChecked(element);
-            break;
-    
-        case 'edit':
-            editTask(element);
-            break;
-        
-        case 'remove':
-            removeTask(element);
-            break;
+    const action = mapActions[event.target.getAttribute('name')];
 
-        default:
-            break;
+    if (action) {
+        action(event.target);
     }
 
     return;
@@ -139,8 +159,7 @@ const handlerTaskItemEvent = (event) => {
 
 const attachEvents = () => {
     document.querySelector('form').addEventListener('submit', formHandlerSubmit);
-
-    document.querySelector('ul').addEventListener('click', handlerTaskItemEvent);
+    document.querySelector('ul').addEventListener('click', handlerTaskItemAction);
 }
 
 const taskItemHTML = (task) => {
